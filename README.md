@@ -29,25 +29,24 @@ const myAwesomeValidation (t, val) => {
 }
 
 function App() {
-  const { isErrors, isShowErrors, errors, showErrors, validation } = useValidator(t,
-    {
-      some: '',
-      other: 3,
-    },
-    {
+  cosnt data = {
+    some: '',
+    other: 3,
+  };
+
+  const { isErrors, isShowErrors, errors, showErrors, validation } = useValidator(t, data, {
       some: required,
       other: [required, min(2), myAwesomeValidation],
-    },
-  );
+    });
 
   return (
-    <div ref={ref}>
+    <div>
       <div>
-        <div>Some: {some}</div>
+        <div>Some: {data.some}</div>
         {errors.some && <div styles={{ color: 'red' }}>{errors.some}</div>}
       </div>
       <div>
-        <div>Other: {other}</div>
+        <div>Other: {data.other}</div>
         {errors.other && <div styles={{ color: 'red' }}>{errors.other}</div>}
       </div>
     </div>
