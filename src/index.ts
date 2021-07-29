@@ -2,12 +2,9 @@ import { useMemo, useCallback, useState } from 'react';
 
 export type TranslateFn = (key: string, params?: { [key: string]: any }) => string;
 export type CheckerFn<T> = (t: TranslateFn, val: T) => void | string;
+export type Rules<T> = { [K in keyof T]?: CheckerFn<T[K]> | CheckerFn<T[K]>[] };
 
-export default function useValidation<T>(
-  t: TranslateFn,
-  data: T,
-  rules: { [K in keyof T]?: CheckerFn<T[K]> | CheckerFn<T[K]>[] },
-) {
+export default function useValidation<T>(t: TranslateFn, data: T, rules: Rules<T>) {
   const [isShowErrors, setShowErrors] = useState(false);
 
   const showErrors = useCallback(() => {
