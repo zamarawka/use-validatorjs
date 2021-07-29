@@ -29,15 +29,15 @@ const myAwesomeValidation (t, val) => {
 }
 
 function App() {
-  cosnt data = {
+  const data = {
     some: '',
     other: 3,
   };
 
   const { isErrors, isShowErrors, errors, showErrors, validation } = useValidator(t, data, {
-      some: required,
-      other: [required, min(2), myAwesomeValidation],
-    });
+    some: required,
+    other: [required, min(2), myAwesomeValidation],
+  });
 
   return (
     <div>
