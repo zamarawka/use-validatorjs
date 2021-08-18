@@ -7,8 +7,8 @@ export type Rules<T> = { [K in keyof T]?: CheckerFn<T[K]> | CheckerFn<T[K]>[] };
 export default function useValidation<T>(t: TranslateFn, data: T, rules: Rules<T>) {
   const [isShowErrors, setShowErrors] = useState(false);
 
-  const showErrors = useCallback(() => {
-    setShowErrors(true);
+  const showErrors = useCallback((val = true) => {
+    setShowErrors(val);
   }, []);
 
   const validation = useMemo(() => {
