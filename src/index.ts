@@ -43,7 +43,9 @@ export default function useValidation<T>(t: TranslateFn, data: T, rules: Rules<T
   return { isErrors, isShowErrors, errors, showErrors, validation };
 }
 
-export const required: CheckerFn<string | number> = (t, val) => {
+type RequiredValue = string | number | boolean;
+
+export const required: CheckerFn<RequiredValue> = (t, val) => {
   if (val === null || val === undefined) {
     return t('required');
   }
@@ -54,11 +56,14 @@ export const required: CheckerFn<string | number> = (t, val) => {
 
     case 'number':
       return isNaN(val) ? t('required') : undefined;
+
+    case 'boolean':
+      return !val ? t('required') : undefined;
   }
 };
 
 export const requiredIf =
-  <T>(dataVal: T, check: T): CheckerFn<string | number> =>
+  <T>(dataVal: T, check: T): CheckerFn<RequiredValue> =>
   (t, val) => {
     if (dataVal === check) {
       return required(t, val);
@@ -66,7 +71,7 @@ export const requiredIf =
   };
 
 export const requiredUnless =
-  <T>(dataVal: T, check: T): CheckerFn<string | number> =>
+  <T>(dataVal: T, check: T): CheckerFn<RequiredValue> =>
   (t, val) => {
     if (dataVal !== check) {
       return required(t, val);
@@ -74,7 +79,7 @@ export const requiredUnless =
   };
 
 export const requiredWith =
-  <T>(dataVal: T): CheckerFn<string | number> =>
+  <T>(dataVal: T): CheckerFn<RequiredValue> =>
   (t, val) => {
     if (dataVal) {
       return required(t, val);
@@ -82,7 +87,7 @@ export const requiredWith =
   };
 
 export const requiredWithAll =
-  (dataVal: any[]): CheckerFn<string | number> =>
+  (dataVal: any[]): CheckerFn<RequiredValue> =>
   (t, val) => {
     if (dataVal.every((val) => !!val)) {
       return required(t, val);
@@ -90,7 +95,7 @@ export const requiredWithAll =
   };
 
 export const requiredWithout =
-  <T>(dataVal: T): CheckerFn<string | number> =>
+  <T>(dataVal: T): CheckerFn<RequiredValue> =>
   (t, val) => {
     if (!dataVal) {
       return required(t, val);
@@ -98,7 +103,7 @@ export const requiredWithout =
   };
 
 export const requiredWithoutAll =
-  (dataVal: any[]): CheckerFn<string | number> =>
+  (dataVal: any[]): CheckerFn<RequiredValue> =>
   (t, val) => {
     if (dataVal.every((val) => !val)) {
       return required(t, val);
@@ -144,5 +149,11 @@ export const email: CheckerFn<string> = (t, val) => {
 
   if (val !== '' && !emailRE.test(val)) {
     return t('email');
+  }
+};
+
+export const accepted: CheckerFn<boolean | number> = (t, val) => {
+  if (!val) {
+    return t('accepted');
   }
 };
