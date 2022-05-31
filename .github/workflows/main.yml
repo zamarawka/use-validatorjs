@@ -1,9 +1,6 @@
 name: CI
 
 on:
-  push:
-    paths-ignore:
-      - '**.md'
   pull_request:
     paths-ignore:
       - '**.md'
@@ -13,13 +10,23 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [10]
+        node: [14, 16, 18]
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
           node-version: ${{matrix.node}}
       - run: npm ci
-      - run: npm run build
+      - name: Build package
+        run: npm run build
       - run: npm run lint
-      - run: npm test
+      - name: Run tests and get coverage
+        run: npm test
+      - name: Print coverage report in pull request
+        uses: andybelltree/lcov-reporter-action@v1.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          lcov-file: ./coverage/lcov.info
+          filter-changed-files: true
+          delete-old-comments: true
+          max-uncovered-lines: 10
