@@ -21,7 +21,7 @@ jobs:
         run: npm run build
       - run: npm run lint
       - name: Run tests and get coverage
-        run: npm test
+        run: npm run test:coverage
       - name: Print coverage report in pull request
         uses: andybelltree/lcov-reporter-action@v1.2.0
         with:
