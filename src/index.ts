@@ -159,9 +159,9 @@ export const accepted: CheckerFn<boolean | number> = (t, val) => {
 };
 
 export const notIn =
-  (dataVal: any[]): CheckerFn<RequiredValue> =>
+  <T>(dataVal: T[]): CheckerFn<T> =>
   (t, val) => {
-    if (dataVal.indexOf(val) !== -1) {
+    if (dataVal.includes(val)) {
       return t('alreadyExists');
     }
   };
