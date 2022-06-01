@@ -13,6 +13,7 @@ import {
   max,
   email,
   accepted,
+  notIn,
 } from '../src';
 
 describe('Rule: required', () => {
@@ -199,5 +200,15 @@ describe('Rule: accepted', () => {
   it('Valid case', () => {
     expect(accepted(t, true)).toBeUndefined();
     expect(accepted(t, 1)).toBeUndefined();
+  });
+});
+
+describe('Rule: notIn', () => {
+  it('Error case', () => {
+    expect(notIn<string>(['abc', 'dfg'])(t, 'abc')).toBe('alreadyExists');
+  });
+
+  it('Valid case', () => {
+    expect(notIn<string>(['abc', 'dfg'])(t, 'a')).toBeUndefined();
   });
 });
