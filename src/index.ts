@@ -4,6 +4,11 @@ export type TranslateFn = (key: string, params?: { [key: string]: any }) => stri
 export type CheckerFn<T> = (t: TranslateFn, val: T) => void | string;
 export type Rules<T> = { [K in keyof T]?: CheckerFn<T[K]> | CheckerFn<T[K]>[] };
 
+export const customMessage =
+  <T>(message: string, cb: CheckerFn<T>): CheckerFn<T> =>
+  (_t, val) =>
+    cb(() => message, val);
+
 export default function useValidation<T>(t: TranslateFn, data: T, rules: Rules<T>) {
   const [isShowErrors, setShowErrors] = useState(false);
 
