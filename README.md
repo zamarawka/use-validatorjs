@@ -22,7 +22,7 @@ As rusult it becomes us to as lot of pros:
 - Easy way to create rules - you should simply write js function
 - Powerful language to describe validation rules - native js structs is flexible
 
-```jsx
+```tsx
 import useValidator, { required, min } from 'use-validatorjs';
 
 // Some i18n function like https://www.i18next.com/overview/api#t
@@ -56,14 +56,14 @@ function App() {
 }
 ```
 
-# Custom validation rule
+## Custom validation rule
 
 You could create custom validation rule by create implementation for `CheckerFn` type.
-`CheckerFn` recieve translation function as first argument, validation value as second argument.
+`CheckerFn` receive translation function as first argument, validation value as second argument.
 It should return `undefined` if validation pass or string if validation failed.
 `CheckerFn` - is generic type wich await type of validation value.
 
-```jsx
+```tsx
 import useValidator, { CheckerFn } from 'use-validatorjs';
 
 // Custom validation function
@@ -90,6 +90,30 @@ function App() {
   const { isErrors, errors } = useValidator(t, data, {
     some: myAwesomeValidation,
     other: [myAwesomeValidation, myAwesomeValidationWithParams(3)],
+  });
+
+  // ... render logic errors here
+}
+```
+
+## Custom validation message
+
+In some cases you need to render custom validation message for rule.
+We can do it with helper function `customMessage`.
+`customMessage` receive validation message as first argument, rule as second.
+
+```tsx
+import useValidator, { required, min customMessage } from 'use-validatorjs';
+
+function App() {
+  const data = {
+    some: '',
+    price: 3
+  };
+
+  const { isErrors, errors } = useValidator(t, data, {
+    some: customMessage('This is very important field', required),
+    price: customMessage('Price field should be as least 6', min(6))
   });
 
   // ... render logic errors here
