@@ -56,6 +56,57 @@ function App() {
 }
 ```
 
+## UI/UX
+
+Good practice is don't shock users untill they try to do something wrong.
+Based on this ideology `useValidator` return have 2 objects with errors.
+
+1. `validation` - realtime validation messages
+2. `errors` - empty object untill you need to show errors
+
+To fill errors object you should use `showErrors` function, which could receive boolean value, with state with `true` as default.
+To check current state of view errors you should use `isShowErrors`.
+
+For example, render validation errors only then form submitted and disable submit button if errors is shown and still exists:
+
+```tsx
+import useValidator from 'use-validatorjs'; // ... rules here
+
+function App() {
+  const data = {
+    // some data object
+  };
+
+  const { isErrors, isShowErrors, errors, showErrors, validation } = useValidator(t, data, {
+    // ... validation rules
+  });
+
+  function handleSubmit() {
+    if (isErrors) {
+      return showErrors();
+    }
+
+    // business logic here: api calls, calculation, etc...
+  }
+
+  return (
+    <div>
+      <div>
+        <div>Some: {data.some}</div>
+        {errors.some && <div styles={{ color: 'red' }}>{errors.some}</div>}
+      </div>
+      <div>
+        <div>Other: {data.other}</div>
+        {errors.other && <div styles={{ color: 'red' }}>{errors.other}</div>}
+      </div>
+      <button onClick={handleSubmit} disabled={isShowErrors && isErrors}>
+        Submit
+      </button>
+    </div>
+  );
+}
+```
+
 ## Custom validation rule
 
 You could create custom validation rule by create implementation for `CheckerFn` type.
