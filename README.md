@@ -171,6 +171,225 @@ function App() {
 }
 ```
 
+## Rules
+
+### required
+
+Check value is required
+
+```tsx
+// Negative cases
+const data = {
+  num: NaN,
+  str: '',
+  bool: false,
+};
+
+// Positive cases
+const data = {
+  num: 0,
+  str: 'any not empty string',
+  bool: true,
+};
+
+// Example
+const rules = {
+  num: required,
+  str: required,
+  bool: required,
+};
+```
+
+### requiredIf
+
+Check value required if other value equals
+
+```tsx
+// Negative cases
+const data = {
+  other: 3,
+  some: false,
+};
+
+// Positive cases
+const data = {
+  other: 3,
+  some: true,
+};
+
+const data = {
+  other: 5,
+  some: true,
+};
+
+// Example
+const rules = {
+  some: requiredIf(data.other, 3),
+};
+```
+
+### requiredUnless
+
+Check value required if other value not equals
+
+```tsx
+// Negative cases
+const data = {
+  other: 5,
+  some: false,
+};
+
+// Positive cases
+const data = {
+  other: 3,
+  some: false,
+};
+
+const data = {
+  other: 5,
+  some: true,
+};
+
+// Example
+const rules = {
+  some: requiredUnless(data.other, 3),
+};
+```
+
+### same
+
+Check value are same
+
+```tsx
+// Negative cases
+const data = {
+  some: 5,
+  other: 'foo',
+};
+
+// Positive cases
+const data = {
+  some: 3,
+  other: 'str',
+};
+
+// Example
+const rules = {
+  some: same(3),
+  some: same('str'),
+};
+```
+
+### different
+
+Check value are different
+
+```tsx
+// Negative cases
+const data = {
+  some: 3,
+  other: 'str',
+};
+
+// Positive cases
+const data = {
+  some: 5,
+  other: 'foo',
+};
+
+// Example
+const rules = {
+  some: different(3),
+  some: different('str'),
+};
+```
+
+### min
+
+Check value more than
+
+```tsx
+// Negative cases
+const data = {
+  some: 2,
+};
+
+// Positive cases
+const data = {
+  some: 5,
+};
+
+// Example
+const rules = {
+  some: min(3),
+};
+```
+
+### max
+
+Check value less than
+
+```tsx
+// Negative cases
+const data = {
+  some: 5,
+};
+
+// Positive cases
+const data = {
+  some: 2,
+};
+
+// Example
+const rules = {
+  some: max(3),
+};
+```
+
+### email
+
+Check value is valid email adress
+
+```tsx
+// Negative cases
+const data = {
+  some: 'some-random-string',
+};
+
+// Positive cases
+const data = {
+  some: 'some@example.com',
+};
+
+// Example
+const rules = {
+  some: email,
+};
+```
+
+### accepted
+
+Check value is accepted. Typically checkboxes.
+
+```tsx
+// Negative cases
+const data = {
+  some: 0,
+  other: false,
+};
+
+// Positive cases
+const data = {
+  some: 1,
+  other: true,
+};
+
+// Example
+const rules = {
+  some: accepted,
+};
+```
+
 # Development
 
 ```sh
