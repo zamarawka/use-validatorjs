@@ -59,12 +59,12 @@ function App() {
 ## UI/UX
 
 Good practice is don't shock users untill they try to do something wrong.
-Based on this ideology `useValidator` return have 2 objects with errors.
+Based on this ideology `useValidator` return 2 objects with errors:
 
 1. `validation` - realtime validation messages
 2. `errors` - empty object untill you need to show errors
 
-To fill errors object you should use `showErrors` function, which could receive boolean value, with state with `true` as default.
+To fill errors object you should use `showErrors` function, which could receive boolean value with state, by default it's `true`.
 To check current state of view errors you should use `isShowErrors`.
 
 For example, render validation errors only then form submitted and disable submit button if errors is shown and still exists:
@@ -110,8 +110,10 @@ function App() {
 ## Custom validation rule
 
 You could create custom validation rule by create implementation for `CheckerFn` type.
+
 `CheckerFn` receive translation function as first argument, validation value as second argument.
-It should return `undefined` if validation pass or string if validation failed.
+It should return `undefined` if validation pass or string with validaiton message if validation failed.
+
 `CheckerFn` - is generic type wich await type of validation value.
 
 ```tsx
@@ -150,7 +152,8 @@ function App() {
 ## Custom validation message
 
 In some cases you need to render custom validation message for rule.
-We can do it with helper function `customMessage`.
+You can do it with helper function `customMessage`.
+
 `customMessage` receive validation message as first argument, rule as second.
 
 ```tsx
