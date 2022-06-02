@@ -4,6 +4,10 @@
 
 # use-validatorjs
 
+Tiny tree-shakable package for validation any data-model by rules for [React.js](https://reactjs.org/).
+Provides hook for manage validation state and run validations agnostic from way to input data.
+It also knows about i18n of your app and don't try to force use of internal translation engine.
+
 Package includes its TypeScript Definitions
 
 # Install
@@ -25,7 +29,7 @@ As result it give us to a lot of pros:
 ```tsx
 import useValidator, { required, min } from 'use-validatorjs';
 
-// Some i18n function like https://www.i18next.com/overview/api#t
+// Some i18n function like https://github.com/zamarawka/i18n-lite#t or https://www.i18next.com/overview/api#t
 function t(key, params) {
   return key;
 }
@@ -173,6 +177,45 @@ function App() {
   // ... render logic errors here
 }
 ```
+
+## i18n
+
+Typically in semi-size apps we already have some i18n engine.
+In this case synchronize language output from a lot of libraries really painful.
+For example: we have i18next as base engine, moment.js for date view, data-validation with own interpolation dialect, some ui-component library with included texts for close buttons of modals.
+To reach consistent translation of app we should sync all of these libs on several lifecycles and cases:
+
+- at app loading phase - there is no seanse to download all langs on app startup
+- change language - all libs should pre-load it's translation and call change current language at one moment
+- sync translation files - should remebemer all interpolation dialects (sometimes it is `{{}}`, sometimes it is `:value:`) and don't miss to add new lang for your libs
+- undestanding how to change whole translation file for some of libs - sometimes texts too casual for your ui
+
+We faced with this problem too often. So, `useValidation` don't use own translation engine under the hood.
+It receive translation function as first argument. Function should have compatible interface with [t from react-i18next](https://www.i18next.com/overview/api#t) or [t from i18n-lite](https://github.com/zamarawka/i18n-lite#t). If you use one of this libs you could simply pass this function with binded namespace:
+
+```tsx
+import useValidator, { required, min customMessage } from 'use-validatorjs';
+import { useTranslation } from 'i18n-lite';
+
+function App() {
+  const { t: validationT } = useTranslation('validation');
+  const data = {
+    some: '',
+    price: 3
+  };
+
+  const { isErrors, errors } = useValidator(validationT, data, {
+    some: customMessage(validationT('custom.required.key'), required),
+    price: min(6)
+  });
+
+  // ... render logic errors here
+}
+```
+
+In other cases it is up to you create your own implementation according with your environment.
+
+Bad news: at this moment there are no out of the box translation files for rules. It is under development and will appear as soon as possible.
 
 ## Rules
 
