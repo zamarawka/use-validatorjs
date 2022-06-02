@@ -14,13 +14,13 @@ npm install use-validatorjs
 
 # Usage
 
-Validation rules here is plain javascript functions.
-We don't create abstract language based on strings, we use javascript.
-As result it becomes us to as lot of pros:
+Validation rules here - is plain javascript functions.
+We don't create abstract language based on strings, magic or other spiritual tactics. We use javascript.
+As result it give us to a lot of pros:
 
-- Fully type-safe - all rules has additional typecheck
 - Easy way to create rules - you should simply write js function
 - Powerful language to describe validation rules - native js structs is flexible
+- Fully type-safe in ts usage - all rules has additional typecheck of validation value
 
 ```tsx
 import useValidator, { required, min } from 'use-validatorjs';
