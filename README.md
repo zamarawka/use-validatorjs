@@ -256,6 +256,124 @@ const rules = {
 };
 ```
 
+### requiredWith
+
+Check value required if other value is positive
+
+```tsx
+// Negative cases
+const data = {
+  other: 1,
+  some: false,
+};
+
+// Positive cases
+const data = {
+  other: 1,
+  some: true,
+};
+
+const data = {
+  other: 0,
+  some: false,
+};
+
+// Example
+const rules = {
+  some: requiredWith(data.other),
+};
+```
+
+### requiredWithAll
+
+Check value required if every of other values are positive
+
+```tsx
+// Negative cases
+const data = {
+  other: 1,
+  foo: 'some',
+  some: false,
+};
+
+// Positive cases
+const data = {
+  other: 1,
+  foo: 'some',
+  some: true,
+};
+
+const data = {
+  other: 0,
+  foo: 'some', // or ''
+  some: false,
+};
+
+// Example
+const rules = {
+  some: requiredWithAll([data.other, data.foo, true]),
+};
+```
+
+### requiredWithout
+
+Check value required if other value is negative
+
+```tsx
+// Negative cases
+const data = {
+  other: 0,
+  some: false,
+};
+
+// Positive cases
+const data = {
+  other: 0,
+  some: true,
+};
+
+const data = {
+  other: 1,
+  some: false,
+};
+
+// Example
+const rules = {
+  some: requiredWithout(data.other),
+};
+```
+
+### requiredWithoutAll
+
+Check value required if every of other values are negative
+
+```tsx
+// Negative cases
+const data = {
+  other: 0,
+  foo: '',
+  some: false,
+};
+
+// Positive cases
+const data = {
+  other: 0,
+  foo: '',
+  some: true,
+};
+
+const data = {
+  other: 0, // or 1
+  foo: 'some',
+  some: false,
+};
+
+// Example
+const rules = {
+  some: requiredWithoutAll([data.other, data.foo, false]),
+};
+```
+
 ### same
 
 Check value are same
