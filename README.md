@@ -16,7 +16,7 @@ npm install use-validatorjs
 
 Validation rules here is plain javascript functions.
 We don't create abstract language based on strings, we use javascript.
-As rusult it becomes us to as lot of pros:
+As result it becomes us to as lot of pros:
 
 - Fully type-safe - all rules has additional typecheck
 - Easy way to create rules - you should simply write js function
