@@ -1,6 +1,6 @@
 {
   "name": "use-validatorjs",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Tiny laravel-like data validator for react.",
   "main": "lib",
   "module": "lib/esm",
