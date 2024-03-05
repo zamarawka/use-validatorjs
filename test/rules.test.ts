@@ -11,6 +11,8 @@ import {
   different,
   min,
   max,
+  minLength,
+  maxLength,
   email,
   accepted,
 } from '../src';
@@ -171,6 +173,28 @@ describe('Rule: max', () => {
   it('Valid case', () => {
     expect(max(6)(t, 4)).toBeUndefined();
     expect(max(4)(t, 4)).toBeUndefined();
+  });
+});
+
+describe('Rule: minLength', () => {
+  it('Error case', () => {
+    expect(minLength(6)(t, '1234')).toBeDefined();
+  });
+
+  it('Valid case', () => {
+    expect(minLength(3)(t, '1234')).toBeUndefined();
+    expect(minLength(4)(t, '1234')).toBeUndefined();
+  });
+});
+
+describe('Rule: maxLength', () => {
+  it('Error case', () => {
+    expect(maxLength(3)(t, '1234')).toBeDefined();
+  });
+
+  it('Valid case', () => {
+    expect(maxLength(6)(t, '123456')).toBeUndefined();
+    expect(maxLength(4)(t, '1234')).toBeUndefined();
   });
 });
 

@@ -147,6 +147,22 @@ export const max =
     }
   };
 
+export const minLength =
+  (min: number): CheckerFn<string> =>
+  (t, val) => {
+    if (val.length < min) {
+      return t('minLength', { min });
+    }
+  };
+
+export const maxLength =
+  (max: number): CheckerFn<string> =>
+  (t, val) => {
+    if (val.length > max) {
+      return t('maxLength', { max });
+    }
+  };
+
 export const email: CheckerFn<string> = (t, val) => {
   // eslint-disable-next-line max-len
   const emailRE =
