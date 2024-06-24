@@ -178,3 +178,11 @@ export const accepted: CheckerFn<boolean | number> = (t, val) => {
     return t('accepted');
   }
 };
+
+export const notIn =
+  <T>(dataVal: T[]): CheckerFn<T> =>
+  (t, val) => {
+    if (dataVal.includes(val)) {
+      return t('alreadyExists');
+    }
+  };
