@@ -147,8 +147,10 @@ export const max =
     }
   };
 
+export type LengthValue = { length: number };
+
 export const minLength =
-  (min: number): CheckerFn<string> =>
+  (min: number): CheckerFn<LengthValue> =>
   (t, val) => {
     if (val.length < min) {
       return t('minLength', { min });
@@ -156,7 +158,7 @@ export const minLength =
   };
 
 export const maxLength =
-  (max: number): CheckerFn<string> =>
+  (max: number): CheckerFn<LengthValue> =>
   (t, val) => {
     if (val.length > max) {
       return t('maxLength', { max });
