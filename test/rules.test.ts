@@ -179,22 +179,26 @@ describe('Rule: max', () => {
 describe('Rule: minLength', () => {
   it('Error case', () => {
     expect(minLength(6)(t, '1234')).toBeDefined();
+    expect(minLength(6)(t, [1, 2, 3, 4])).toBeDefined();
   });
 
   it('Valid case', () => {
     expect(minLength(3)(t, '1234')).toBeUndefined();
     expect(minLength(4)(t, '1234')).toBeUndefined();
+    expect(minLength(3)(t, [1, 2, 3, 4])).toBeUndefined();
   });
 });
 
 describe('Rule: maxLength', () => {
   it('Error case', () => {
     expect(maxLength(3)(t, '1234')).toBeDefined();
+    expect(maxLength(3)(t, [1, 2, 3, 4])).toBeDefined();
   });
 
   it('Valid case', () => {
     expect(maxLength(6)(t, '123456')).toBeUndefined();
     expect(maxLength(4)(t, '1234')).toBeUndefined();
+    expect(maxLength(4)(t, [1, 2, 3, 4])).toBeUndefined();
   });
 });
 
