@@ -48,7 +48,7 @@ export default function useValidation<T>(t: TranslateFn, data: T, rules: Rules<T
   return { isErrors, isShowErrors, errors, showErrors, validation };
 }
 
-type RequiredValue = string | number | boolean;
+type RequiredValue = string | number | boolean | null | undefined;
 
 export const required: CheckerFn<RequiredValue> = (t, val) => {
   if (val === null || val === undefined) {
