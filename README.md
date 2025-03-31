@@ -510,6 +510,54 @@ const rules = {
 };
 ```
 
+### minLength
+
+Check value length less than
+
+```tsx
+// Negative cases
+const data = {
+  someString: '12',
+  someArr: [1, 2],
+};
+
+// Positive cases
+const data = {
+  someString: '1234',
+  someArr: [1, 2, 3, 4],
+};
+
+// Example
+const rules = {
+  someString: minLength(3),
+  someArr: minLength(3),
+};
+```
+
+### maxLength
+
+Check value length more than
+
+```tsx
+// Negative cases
+const data = {
+  someString: '1234',
+  someArr: [1, 2, 3, 4],
+};
+
+// Positive cases
+const data = {
+  someString: '12',
+  someArr: [1, 2],
+};
+
+// Example
+const rules = {
+  someString: maxLength(3),
+  someArr: maxLength(3),
+};
+```
+
 ### email
 
 Check value is valid email adress
